@@ -48,12 +48,15 @@ else
   for d in "$tmp"/skills/*/; do names+=("$(basename "$d")"); done
 fi
 
+for name in "${names[@]}"; do
+  [ -f "$tmp/skills/$name/SKILL.md" ] || die "unknown skill: $name"
+done
+
 mkdir -p "$DEST" "$LINK_DIR"
 ts="$(date +%Y%m%d%H%M%S)"
 
 for name in "${names[@]}"; do
   src="$tmp/skills/$name"
-  [ -f "$src/SKILL.md" ] || die "unknown skill: $name"
 
   rm -rf "${DEST:?}/$name"
   cp -R "$src" "$DEST/$name"

@@ -1,6 +1,7 @@
 ---
 name: hc
-description: Iteratively optimize toward a measurable objective with an approach, implement, measure, regression-test loop. Each round is benchmarked against the current best, changes that don't help are reverted, and when progress stalls it searches widely across approaches to escape local optima. Use when the user invokes /hc with an objective, or asks to optimize, tune, minimize or maximize a metric (latency, throughput, bundle size, memory, cost, accuracy, test pass rate, score).
+argument-hint: "<objective>"
+description: Iteratively optimize toward a measurable objective with an approach, implement, measure, regression-test loop. Each round is benchmarked against the current best, changes that don't help are reverted, and when progress stalls it searches widely across approaches to escape local optima. Use when the user invokes /hc with an objective, or explicitly asks to hill-climb or to run an optimization loop toward a metric (latency, throughput, bundle size, memory, cost, accuracy, test pass rate, score). Not for a one-off "make this faster" fix.
 ---
 
 # /hc: Hill Climb
@@ -31,12 +32,13 @@ objective
 | **Target / stop** | ≤ 120 ms, or 15 iterations, or 3 rounds in a row with no gain after wider jumps |
 | **Guardrails** | things that must not get worse: correctness tests, memory ≤ X, public API unchanged |
 | **Scope** | files and systems that may change, and ones that are off-limits |
+| **Commits** | local commits on `hill-climb/<slug>` (default), or leave accepted steps uncommitted for review |
 
 Then:
 1. **Understand the ground.** Read the code under optimization, profile it if you can, and learn the existing tooling and patterns. Reuse existing building blocks (as in `/sc`).
 2. **Identify the regression surface.** Find tests and consumers that overlap the code you'll touch: unit and integration tests, downstream callers (use find-references or Lemma `check`), and related benchmarks.
 3. **Take a baseline.** Run the measure command several times and record the median and spread. Run the regression suite and record which tests already fail, so you don't blame yourself for them later.
-4. **Isolate the work.** Use a dedicated local branch (`hill-climb/<slug>`). Commit each accepted step there and **never push**. Outside git, keep a patch per accepted step.
+4. **Isolate the work.** Start from a clean working tree. If there are uncommitted changes, stop and ask, because a revert must never touch work that isn't yours. Use a dedicated local branch (`hill-climb/<slug>`), commit each accepted step there and **never push**. Outside git, keep a patch per accepted step.
 
 ## 1. Approach
 
@@ -52,13 +54,13 @@ Then:
 ## 3. Benchmark, test, audit
 
 - Use the **same command, inputs and conditions** as the baseline. Run it multiple times and compare medians against the **current best** (not the original baseline).
-- **No improvement** (within the noise threshold, or worse): revert, log it with the reason, then pick a **new approach** and go back to implementation.
+- **No improvement** (within the noise threshold, or worse): revert this iteration's changes only, log it with the reason, then pick a **new approach** and go back to implementation.
 - **Improvement**: continue to regression testing.
 
 ## 4. Regression testing
 
 - Run the regression surface from setup plus every guardrail metric.
-- If anything newly broke, fix it inside the same idea or revert it. **Never accept a step that breaks an overlapping surface.**
+- If anything newly broke, fix it inside the same idea or revert it. After a fix, **re-run the benchmark**, because the fix can cost the gain. **Never accept a step that breaks an overlapping surface.**
 
 ## 5. Accept and go to the next step
 

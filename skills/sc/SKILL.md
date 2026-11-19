@@ -1,5 +1,6 @@
 ---
 name: sc
+argument-hint: "<task>"
 description: Scope a task before building it. Map the existing codebase and infrastructure (design patterns, coding standards, existing functions, tooling, upstream and downstream dependencies), reuse existing building blocks instead of inventing new ones, ask instead of assuming, put clearly marked stop-gaps where decisions are open, and never mark the task complete while a decision is still open. Use when the user invokes /sc with a task, or asks to scope, plan, or "figure out how to do" a change in an existing codebase.
 ---
 
@@ -25,7 +26,7 @@ Investigate before proposing anything. Cover every item below and write down wha
 | **Downstream** | who calls or consumes it (other modules, services, repos, clients, data consumers) | find-references, generated clients, API schemas, other repos in the workspace |
 
 - Use language-server tools (such as Lemma `references`, `implementations`, `check`) for usages and cross-repo impact when they're available. Text search misses aliases and matches comments and strings.
-- Run the existing tests and build once so you know the baseline before changing anything.
+- Run the build and the tests that cover this area once, so you know the baseline before changing anything. If they need external services or would change shared state, ask first.
 
 ## Phase 2: Decide what exists, what can be done, what must be built
 
@@ -60,12 +61,22 @@ When the task, the codebase or the infrastructure leaves a choice open, **ask**.
   - the options, with your **recommendation** and what each option changes
 - Only ask about real decisions. Facts you can check in the code or docs, look up yourself.
 
-## Phase 4: Handling ambiguity, with stop-gaps instead of stalling or guessing
+### Scope report (ends Phases 1–3, before building)
+
+1. **Task:** one line, restated in your words.
+2. **Exists / Can / Must** lists, with `file:line`.
+3. **Impact map:** a tree or box diagram of upstream → change → downstream.
+4. **Plan:** ordered steps, each naming the existing building block it uses.
+5. **Decisions:** the `D1…Dn` questions plus the decision log.
+
+Then wait for answers on anything you can't stop-gap (see Phase 4) before building.
+
+## Phase 4: Build, with stop-gaps for open decisions instead of stalling or guessing
 
 When a decision is open but work can continue, build a **stop-gap** so the POC can run and be iterated on:
 
 - Keep it **minimal and isolated**, behind the seam where the real decision will land (one function, config value, adapter or flag), so swapping it later changes one place.
-- **Mark it in code** with the decision ID:
+- **Mark it in code** with the decision ID, in a comment in that file's language:
   `// STOPGAP(D2): hardcoded to "us-east-1" until region strategy is decided`
 - Prefer something obviously provisional (a fixed value, an in-memory version, a no-op behind the real interface) over something that quietly looks finished.
 - Iterate on the POC with the user; when a decision is made, replace the stop-gap and close the decision.
@@ -86,13 +97,3 @@ Keep a running decision log and show it whenever you report progress:
 
 - **The task is not complete while any decision is ❓ open or any `STOPGAP(` marker remains.** Report it as `POC: N decisions open`, never as "done".
 - Before claiming completion, search the codebase for `STOPGAP(` and confirm the count is zero.
-
-## Scope report (end of Phases 1–3, before building)
-
-1. **Task:** one line, restated in your words.
-2. **Exists / Can / Must** lists, with `file:line`.
-3. **Impact map:** a tree or box diagram of upstream → change → downstream.
-4. **Plan:** ordered steps, each naming the existing building block it uses.
-5. **Decisions:** the `D1…Dn` questions plus the decision log.
-
-Then wait for answers on anything you can't stop-gap before building.

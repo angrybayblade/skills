@@ -1,26 +1,36 @@
 #!/usr/bin/env bash
-# Install skills from angrybayblade/skills for Claude Code (and other agents).
+# Install skills from angrybayblade/skills for any agent that supports Agent Skills
+# (https://agentskills.io): a folder per skill with a SKILL.md inside.
 #
 #   curl -fsSL https://raw.githubusercontent.com/angrybayblade/skills/main/install.sh | bash
 #   curl -fsSL .../install.sh | bash -s -- sr sc     # only some skills
 #
 # Env:
-#   SKILLS_DIR         where skills are stored     (default: ~/.agents/skills)
-#   CLAUDE_SKILLS_DIR  where Claude Code finds them (default: ~/.claude/skills)
-#   SKILLS_REF         branch, tag or commit        (default: main)
-#   GITHUB_TOKEN       token for a private repo     (falls back to GH_TOKEN, then `gh auth token`)
+#   SKILLS_DIR         where skills are stored (default: ~/.agents/skills, the shared
+#                      location that many agents read directly)
+#   AGENT_SKILLS_DIRS  colon-separated skill folders of agents that don't read SKILLS_DIR;
+#                      each skill is symlinked into every one of them
+#                      (default: ~/.claude/skills if ~/.claude exists, otherwise none)
+#   SKILLS_REF         branch, tag or commit (default: main)
+#   GITHUB_TOKEN       token for a private repo (falls back to GH_TOKEN, then `gh auth token`)
 set -euo pipefail
 
 REPO="angrybayblade/skills"
 REF="${SKILLS_REF:-main}"
 DEST="${SKILLS_DIR:-$HOME/.agents/skills}"
-LINK_DIR="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
 
 say() { printf '%s\n' "$*"; }
 die() { printf 'error: %s\n' "$*" >&2; exit 1; }
 
 command -v curl >/dev/null || die "curl is required"
 command -v tar  >/dev/null || die "tar is required"
+
+link_dirs=()
+if [ -n "${AGENT_SKILLS_DIRS+set}" ]; then
+  IFS=':' read -r -a link_dirs <<< "$AGENT_SKILLS_DIRS"
+elif [ -d "$HOME/.claude" ]; then
+  link_dirs=("$HOME/.claude/skills")
+fi
 
 token="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
 if [ -z "$token" ] && command -v gh >/dev/null 2>&1; then
@@ -52,25 +62,30 @@ for name in "${names[@]}"; do
   [ -f "$tmp/skills/$name/SKILL.md" ] || die "unknown skill: $name"
 done
 
-mkdir -p "$DEST" "$LINK_DIR"
+mkdir -p "$DEST"
 ts="$(date +%Y%m%d%H%M%S)"
 
 for name in "${names[@]}"; do
-  src="$tmp/skills/$name"
-
   rm -rf "${DEST:?}/$name"
-  cp -R "$src" "$DEST/$name"
+  cp -R "$tmp/skills/$name" "$DEST/$name"
 
-  link="$LINK_DIR/$name"
-  if [ -L "$link" ]; then
-    rm "$link"
-  elif [ -e "$link" ]; then
-    mv "$link" "$link.bak.$ts"
-    say "  backed up existing $link -> $link.bak.$ts"
-  fi
-  ln -s "$DEST/$name" "$link"
+  for dir in ${link_dirs[@]+"${link_dirs[@]}"}; do
+    [ -n "$dir" ] || continue
+    mkdir -p "$dir"
+    link="$dir/$name"
+    if [ -L "$link" ]; then
+      rm "$link"
+    elif [ -e "$link" ]; then
+      mv "$link" "$link.bak.$ts"
+      say "  backed up existing $link -> $link.bak.$ts"
+    fi
+    ln -s "$DEST/$name" "$link"
+  done
   say "  ✓ $name"
 done
 
-say "Installed ${#names[@]} skill(s) to $DEST (linked in $LINK_DIR)."
-say "Claude Code picks them up right away. If one is missing, run /reload-skills or start a new session."
+say "Installed ${#names[@]} skill(s) to $DEST."
+for dir in ${link_dirs[@]+"${link_dirs[@]}"}; do
+  [ -n "$dir" ] && say "Linked into $dir."
+done
+say "If your agent doesn't list them, reload its skills or start a new session."

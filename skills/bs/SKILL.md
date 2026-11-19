@@ -1,5 +1,6 @@
 ---
 name: bs
+argument-hint: "<problem>"
 description: Brainstorming mode. Break a problem apart, discuss every aspect and trade-off with the user back and forth, then put a solution back together from the agreed decisions. Writes no code and edits no files until the user explicitly asks for that. Use when the user invokes /bs, or says "let's brainstorm", "think this through with me", "let's discuss before building", or "what are our options for X".
 ---
 

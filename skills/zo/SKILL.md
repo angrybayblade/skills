@@ -1,5 +1,6 @@
 ---
 name: zo
+argument-hint: "[topic]"
 description: Zoom out by moving the current problem or topic exactly one level of abstraction UP (for example code to module, module to component, component to system, system to ecosystem, ecosystem to purpose) and show what becomes visible from there, such as neighbours, upstream and downstream, constraints, and whether the problem even matters at that level. Use when the user invokes /zo, or asks to zoom out, step back, or see the bigger picture. Repeat /zo to keep climbing, and use /zi to come back down.
 ---
 

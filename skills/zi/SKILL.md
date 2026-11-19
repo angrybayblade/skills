@@ -1,6 +1,7 @@
 ---
 name: zi
-description: Zoom in by moving the current problem or topic exactly one level of abstraction DOWN (for example purpose to ecosystem, system to component, component to module, module to code, code to runtime) and show the internals at that level, such as parts, mechanisms, data and exactly where the problem lives, backed by evidence. Use when the user invokes /zi, or asks to zoom in, drill down, or look at the details. Repeat /zi to keep descending, and use /zo to go back up.
+argument-hint: "[thing]"
+description: Zoom in by moving the current problem or topic exactly one level of abstraction DOWN (for example purpose to ecosystem, system to component, component to module, module to code, code to runtime) and show the internals at that level, such as parts, mechanisms, data and exactly where the problem lives, backed by evidence. Use when the user invokes /zi, or asks to zoom in or drill down a level. Repeat /zi to keep descending, and use /zo to go back up.
 ---
 
 # /zi: Zoom In

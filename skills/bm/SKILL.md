@@ -1,6 +1,7 @@
 ---
 name: bm
-description: Brief the user on a topic, task, document, codebase area, PR, diff or incident as a visual, hierarchical summary (maps, trees, flowcharts, state charts) rather than linear prose. Use when the user says "brief me", "catch me up", "what's going on with X", "explain this to me", "what did you do", or invokes /bm. With no topic, brief them on everything done since their last message.
+argument-hint: "[topic]"
+description: Brief the user on a topic, task, document, codebase area, PR, diff or incident as a visual, hierarchical summary (maps, trees, flowcharts, state charts) rather than linear prose. Use when the user says "brief me", "catch me up", "what's going on with X", "what did you do", or invokes /bm. With no topic, brief them on everything done since their last message. For a quick status of the current task, use /sr instead.
 ---
 
 # /bm: Brief Me

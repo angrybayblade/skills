@@ -60,7 +60,7 @@ The script picks up `GITHUB_TOKEN`, `GH_TOKEN`, or `gh auth token` automatically
 - Symlinks `~/.claude/skills/<name>` to that copy so Claude Code finds it.
 - Replaces older installs of the same skills. A non-symlink folder already at the link path is moved aside to `<name>.bak.<timestamp>`.
 
-Start a new Claude Code session afterwards to load the skills.
+Claude Code picks the skills up right away. If one is missing, run `/reload-skills` or start a new session.
 
 ### Options
 
@@ -75,6 +75,7 @@ Start a new Claude Code session afterwards to load the skills.
 
 - **Update:** re-run the install command.
 - **Uninstall:** `rm -rf ~/.agents/skills/<name> ~/.claude/skills/<name>`
+- **Renamed skills:** `brief-me`, `sitrep`, `scope`, `brainstorm` and `hill-climb` are now `bm`, `sr`, `sc`, `bs` and `hc`. The installer doesn't remove the old names, so uninstall those by hand if you have them.
 
 ## Layout
 

@@ -73,4 +73,4 @@ for name in "${names[@]}"; do
 done
 
 say "Installed ${#names[@]} skill(s) to $DEST (linked in $LINK_DIR)."
-say "Start a new Claude Code session to pick them up."
+say "Claude Code picks them up right away. If one is missing, run /reload-skills or start a new session."

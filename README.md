@@ -4,21 +4,33 @@ Agent skills for [Claude Code](https://claude.com/claude-code), built for visual
 
 | Skill | Invoke | What it does |
 |---|---|---|
-| [**brief-me**](skills/brief-me/SKILL.md) | `/brief-me [topic]` | A visual, hierarchical briefing (one-liner, map, diagrams, drill-down, "needs you"). With no topic, it briefs on what was done since your last message. |
-| [**sitrep**](skills/sitrep/SKILL.md) | `/sitrep` | A situation report on the current task in 15 lines or fewer: status, progress line, now / blocked / next / needs you. |
-| [**scope**](skills/scope/SKILL.md) | `/scope <task>` | Understands the codebase and infrastructure before deciding anything. Reuses what exists, asks instead of assuming, puts stop-gaps where decisions are open, and never marks a task done while a decision is still open. |
-| [**brainstorm**](skills/brainstorm/SKILL.md) | `/brainstorm <problem>` | Breaks a problem apart, discusses every trade-off back and forth, then reassembles a solution. Writes no code until you explicitly ask. |
-| [**hill-climb**](skills/hill-climb/SKILL.md) | `/hill-climb <objective>` | Measured optimization loop: approach, implement, benchmark, regression-test, then the next step. It reverts changes that don't help and searches widely when progress stalls. |
+| [**bm**](skills/bm/SKILL.md): brief me | `/bm [topic]` | A visual, hierarchical briefing (one-liner, map, diagrams, drill-down, "needs you"). With no topic, it briefs on what was done since your last message. |
+| [**sr**](skills/sr/SKILL.md): sitrep | `/sr` | A situation report on the current task in 15 lines or fewer: status, progress line, now / blocked / next / needs you. |
+| [**sc**](skills/sc/SKILL.md): scope | `/sc <task>` | Understands the codebase and infrastructure before deciding anything. Reuses what exists, asks instead of assuming, puts stop-gaps where decisions are open, and never marks a task done while a decision is still open. |
+| [**bs**](skills/bs/SKILL.md): brainstorm | `/bs <problem>` | Breaks a problem apart, discusses every trade-off back and forth, then reassembles a solution. Writes no code until you explicitly ask. |
+| [**hc**](skills/hc/SKILL.md): hill climb | `/hc <objective>` | Measured optimization loop: approach, implement, benchmark, regression-test, then the next step. It reverts changes that don't help and searches widely when progress stalls. |
+| [**ct**](skills/ct/SKILL.md): critical thinking | `/ct` | Critical-thinking mode, on until you explicitly end it. Zooms out from local fixes to the whole system, finds root causes, backs every claim with code, commands or logs, checks for bias, stays pragmatic, and pushes back on bad decisions. |
+| [**zo**](skills/zo/SKILL.md): zoom out | `/zo [topic]` | Moves the problem one level of abstraction **up** (code → module → component → system → ecosystem → purpose) and shows what becomes visible from there. |
+| [**zi**](skills/zi/SKILL.md): zoom in | `/zi [thing]` | Moves the problem one level of abstraction **down** (purpose → … → code → runtime) and shows the internals and exactly where the problem lives, with evidence. |
 
 ## How they fit together
 
 ```
-/brainstorm ──▶ /scope ──▶ build ──▶ /hill-climb (optimize)
-  decide         ground in    ▲
-                 codebase     │ explicit "build it"
+/bs ──▶ /sc ──▶ build ──▶ /hc (optimize)
+decide   ground in   ▲
+         codebase    │ explicit "build it"
 
-anytime:  /sitrep   (where are we?)
-          /brief-me (explain it to me)
+anytime:  /sr       (where are we?)
+          /bm       (explain it to me)
+          /zo /zi   (move up or down one level of abstraction)
+          /ct       (critical-thinking layer on top of everything, until you exit it)
+```
+
+### Abstraction ladder used by `/zo` and `/zi`
+
+```
+L6 Purpose › L5 Ecosystem › L4 System › L3 Component › L2 Module › L1 Code › L0 Runtime
+              ◀── /zo (one level up)        /zi (one level down) ──▶
 ```
 
 ## Install
@@ -30,7 +42,7 @@ curl -fsSL https://raw.githubusercontent.com/angrybayblade/skills/main/install.s
 To install only some skills:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/angrybayblade/skills/main/install.sh | bash -s -- sitrep scope
+curl -fsSL https://raw.githubusercontent.com/angrybayblade/skills/main/install.sh | bash -s -- sr sc
 ```
 
 **If the repo is private**, `raw.githubusercontent.com` needs a token too. With the GitHub CLI logged in:

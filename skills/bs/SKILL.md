@@ -1,9 +1,9 @@
 ---
-name: brainstorm
-description: Brainstorming mode. Break a problem apart, discuss every aspect and trade-off with the user back and forth, then put a solution back together from the agreed decisions. Writes no code and edits no files until the user explicitly asks for that. Use when the user invokes /brainstorm, or says "let's brainstorm", "think this through with me", "let's discuss before building", or "what are our options for X".
+name: bs
+description: Brainstorming mode. Break a problem apart, discuss every aspect and trade-off with the user back and forth, then put a solution back together from the agreed decisions. Writes no code and edits no files until the user explicitly asks for that. Use when the user invokes /bs, or says "let's brainstorm", "think this through with me", "let's discuss before building", or "what are our options for X".
 ---
 
-# Brainstorm
+# /bs: Brainstorm
 
 A thinking partnership. **Break the problem apart → discuss every aspect and trade-off → put a solution back together.** It's a conversation, not a deliverable.
 
@@ -74,7 +74,7 @@ Once the aspects are decided, assemble the solution:
 ### 5. Solidify
 Present the final decision record (below) and ask what's next:
 - **Write it up:** a doc or ADR
-- **Scope it:** hand off to `/scope` for codebase-grounded planning
+- **Scope it:** hand off to `/sc` for codebase-grounded planning
 - **Build it:** only on explicit instruction
 - **Keep going:** revisit an aspect
 

@@ -2,7 +2,7 @@
 # Install skills from angrybayblade/skills for Claude Code (and other agents).
 #
 #   curl -fsSL https://raw.githubusercontent.com/angrybayblade/skills/main/install.sh | bash
-#   curl -fsSL .../install.sh | bash -s -- sitrep scope     # only some skills
+#   curl -fsSL .../install.sh | bash -s -- sr sc     # only some skills
 #
 # Env:
 #   SKILLS_DIR         where skills are stored     (default: ~/.agents/skills)

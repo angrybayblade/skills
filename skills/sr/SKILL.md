@@ -1,9 +1,9 @@
 ---
-name: sitrep
-description: Give a short situation report on the current task, meaning where it stands right now, in a glanceable fixed format of about 15 lines or fewer. Use when the user says "sitrep", "status", "where are we", "what's the status", "progress?", or invokes /sitrep. For a fuller visual explanation of a topic, use brief-me instead.
+name: sr
+description: Give a short situation report on the current task, meaning where it stands right now, in a glanceable fixed format of about 15 lines or fewer. Use when the user says "sitrep", "status", "where are we", "what's the status", "progress?", or invokes /sr. For a fuller visual explanation of a topic, use /bm instead.
 ---
 
-# Sitrep
+# /sr: Sitrep
 
 A situation report on the **current task**: where it stands right now. The user has ADHD, so it has to be readable in about 5 seconds. Use the fixed format below and add nothing else.
 
@@ -34,4 +34,4 @@ A situation report on the **current task**: where it stands right now. The user 
 - Keep the whole report at **15 lines or fewer**. No paragraphs, no preamble, no sign-off.
 - Lead with numbers and names. Write "**2 files** left", not "a few things remain".
 - Report what you actually verified. Unverified items get ❓ and are never presented as done.
-- Don't explain. If the user wants depth, they'll ask, or they'll use brief-me.
+- Don't explain. If the user wants depth, they'll ask, or they'll use /bm.

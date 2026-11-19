@@ -1,9 +1,9 @@
 ---
-name: scope
-description: Scope a task before building it. Map the existing codebase and infrastructure (design patterns, coding standards, existing functions, tooling, upstream and downstream dependencies), reuse existing building blocks instead of inventing new ones, ask instead of assuming, put clearly marked stop-gaps where decisions are open, and never mark the task complete while a decision is still open. Use when the user invokes /scope with a task, or asks to scope, plan, or "figure out how to do" a change in an existing codebase.
+name: sc
+description: Scope a task before building it. Map the existing codebase and infrastructure (design patterns, coding standards, existing functions, tooling, upstream and downstream dependencies), reuse existing building blocks instead of inventing new ones, ask instead of assuming, put clearly marked stop-gaps where decisions are open, and never mark the task complete while a decision is still open. Use when the user invokes /sc with a task, or asks to scope, plan, or "figure out how to do" a change in an existing codebase.
 ---
 
-# Scope
+# /sc: Scope
 
 **Learn what exists before deciding what can be done and what must be built.**
 

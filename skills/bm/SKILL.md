@@ -1,9 +1,9 @@
 ---
-name: brief-me
-description: Brief the user on a topic, task, document, codebase area, PR, diff or incident as a visual, hierarchical summary (maps, trees, flowcharts, state charts) rather than linear prose. Use when the user says "brief me", "catch me up", "what's going on with X", "explain this to me", "what did you do", or invokes /brief-me. With no topic, brief them on everything done since their last message.
+name: bm
+description: Brief the user on a topic, task, document, codebase area, PR, diff or incident as a visual, hierarchical summary (maps, trees, flowcharts, state charts) rather than linear prose. Use when the user says "brief me", "catch me up", "what's going on with X", "explain this to me", "what did you do", or invokes /bm. With no topic, brief them on everything done since their last message.
 ---
 
-# Brief Me
+# /bm: Brief Me
 
 The user has ADHD. Linear prose doesn't work for them. They need to **see the shape** of a thing first, then zoom in only where they choose. Every briefing is a map with drill-downs, not an essay.
 

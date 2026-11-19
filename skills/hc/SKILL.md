@@ -1,9 +1,9 @@
 ---
-name: hill-climb
-description: Iteratively optimize toward a measurable objective with an approach, implement, measure, regression-test loop. Each round is benchmarked against the current best, changes that don't help are reverted, and when progress stalls it searches widely across approaches to escape local optima. Use when the user invokes /hill-climb with an objective, or asks to optimize, tune, minimize or maximize a metric (latency, throughput, bundle size, memory, cost, accuracy, test pass rate, score).
+name: hc
+description: Iteratively optimize toward a measurable objective with an approach, implement, measure, regression-test loop. Each round is benchmarked against the current best, changes that don't help are reverted, and when progress stalls it searches widely across approaches to escape local optima. Use when the user invokes /hc with an objective, or asks to optimize, tune, minimize or maximize a metric (latency, throughput, bundle size, memory, cost, accuracy, test pass rate, score).
 ---
 
-# Hill Climb
+# /hc: Hill Climb
 
 Given an objective, search for the best solution one measured step at a time. **Keep only changes that measurably improve the objective without breaking anything else.**
 
@@ -33,7 +33,7 @@ objective
 | **Scope** | files and systems that may change, and ones that are off-limits |
 
 Then:
-1. **Understand the ground.** Read the code under optimization, profile it if you can, and learn the existing tooling and patterns. Reuse existing building blocks (as in `/scope`).
+1. **Understand the ground.** Read the code under optimization, profile it if you can, and learn the existing tooling and patterns. Reuse existing building blocks (as in `/sc`).
 2. **Identify the regression surface.** Find tests and consumers that overlap the code you'll touch: unit and integration tests, downstream callers (use find-references or Lemma `check`), and related benchmarks.
 3. **Take a baseline.** Run the measure command several times and record the median and spread. Run the regression suite and record which tests already fail, so you don't blame yourself for them later.
 4. **Isolate the work.** Use a dedicated local branch (`hill-climb/<slug>`). Commit each accepted step there and **never push**. Outside git, keep a patch per accepted step.

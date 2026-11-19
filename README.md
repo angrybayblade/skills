@@ -1,6 +1,6 @@
 # skills
 
-Agent skills for [Claude Code](https://claude.com/claude-code), built for visual and low-noise collaboration.
+Agent skills built for visual and low-noise collaboration. They follow the open [Agent Skills](https://agentskills.io) format (a folder with a `SKILL.md`), so they work with any LLM-powered agent that supports it, such as Claude Code, Codex, Gemini CLI, Cursor or OpenCode. The skills use only the standard `name` and `description` fields and don't depend on any one agent's tools.
 
 | Skill | Invoke | What it does |
 |---|---|---|
@@ -56,25 +56,27 @@ The script picks up `GITHUB_TOKEN`, `GH_TOKEN`, or `gh auth token` automatically
 
 ### What it does
 
-- Copies each skill into `~/.agents/skills/<name>`, a store shared with other agents.
-- Symlinks `~/.claude/skills/<name>` to that copy so Claude Code finds it.
+- Copies each skill into `~/.agents/skills/<name>`, the shared location that many agents read directly.
+- Symlinks each skill into the skill folders of agents that don't read that location. By default this is `~/.claude/skills` when `~/.claude` exists. Set `AGENT_SKILLS_DIRS` for other agents, for example `AGENT_SKILLS_DIRS="$HOME/.claude/skills:$HOME/.cursor/skills"`. Check your agent's docs for its skills folder.
 - Replaces older installs of the same skills. A non-symlink folder already at the link path is moved aside to `<name>.bak.<timestamp>`.
 
-Claude Code picks the skills up right away. If one is missing, run `/reload-skills` or start a new session.
+If your agent doesn't list the skills afterwards, reload its skills or start a new session.
+
+Most agents run a skill when you type `/<name>` or when your request matches its description. The exact way to invoke one depends on the agent.
 
 ### Options
 
 | Env var | Default | Purpose |
 |---|---|---|
 | `SKILLS_DIR` | `~/.agents/skills` | where skills are stored |
-| `CLAUDE_SKILLS_DIR` | `~/.claude/skills` | where Claude Code looks for skills |
+| `AGENT_SKILLS_DIRS` | `~/.claude/skills` if `~/.claude` exists | colon-separated skill folders to symlink into; set it to an empty string for none |
 | `SKILLS_REF` | `main` | branch, tag or commit to install |
 | `GITHUB_TOKEN` | (none) | token for a private repo |
 
 ### Update / uninstall
 
 - **Update:** re-run the install command.
-- **Uninstall:** `rm -rf ~/.agents/skills/<name> ~/.claude/skills/<name>`
+- **Uninstall:** `rm -rf ~/.agents/skills/<name>` and remove the symlink from each agent folder, for example `rm ~/.claude/skills/<name>`
 - **Renamed skills:** `brief-me`, `sitrep`, `scope`, `brainstorm` and `hill-climb` are now `bm`, `sr`, `sc`, `bs` and `hc`. The installer doesn't remove the old names, so uninstall those by hand if you have them.
 
 ## Layout

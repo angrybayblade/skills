@@ -1,6 +1,5 @@
 ---
 name: sc
-argument-hint: "<task>"
 description: Scope a task before building it. Map the existing codebase and infrastructure (design patterns, coding standards, existing functions, tooling, upstream and downstream dependencies), reuse existing building blocks instead of inventing new ones, ask instead of assuming, put clearly marked stop-gaps where decisions are open, and never mark the task complete while a decision is still open. Use when the user invokes /sc with a task, or asks to scope, plan, or "figure out how to do" a change in an existing codebase.
 ---
 
@@ -16,7 +15,7 @@ Investigate before proposing anything. Cover every item below and write down wha
 
 | Area | What to find | Where to look |
 |---|---|---|
-| **Conventions** | coding standards, naming, error handling, logging, test style | `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING*`, lint/format configs, 2–3 nearby files of the same kind |
+| **Conventions** | coding standards, naming, error handling, logging, test style | agent instruction files (`AGENTS.md`, `CLAUDE.md` and similar), `CONTRIBUTING*`, lint/format configs, 2–3 nearby files of the same kind |
 | **Design patterns** | how similar features are already built (layering, DI, repositories, handlers, config) | the closest existing feature to this task: read it end to end |
 | **Building blocks** | existing functions, utils, clients, types, components that already do part of the job | search by behaviour, not just by name; check `utils/`, `lib/`, `shared/`, `common/`, internal packages |
 | **Dependencies** | libraries already installed that cover the need | `package.json` / `pyproject.toml` / `go.mod` / lockfiles |
@@ -25,7 +24,7 @@ Investigate before proposing anything. Cover every item below and write down wha
 | **Upstream** | what the code being changed calls or depends on | definitions, imports, API clients |
 | **Downstream** | who calls or consumes it (other modules, services, repos, clients, data consumers) | find-references, generated clients, API schemas, other repos in the workspace |
 
-- Use language-server tools (such as Lemma `references`, `implementations`, `check`) for usages and cross-repo impact when they're available. Text search misses aliases and matches comments and strings.
+- Use language-server or code-intelligence tools (find-references, find-implementations, cross-repo impact checks) for usages when they're available. Text search misses aliases and matches comments and strings.
 - Run the build and the tests that cover this area once, so you know the baseline before changing anything. If they need external services or would change shared state, ask first.
 
 ## Phase 2: Decide what exists, what can be done, what must be built

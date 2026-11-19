@@ -1,6 +1,5 @@
 ---
 name: hc
-argument-hint: "<objective>"
 description: Iteratively optimize toward a measurable objective with an approach, implement, measure, regression-test loop. Each round is benchmarked against the current best, changes that don't help are reverted, and when progress stalls it searches widely across approaches to escape local optima. Use when the user invokes /hc with an objective, or explicitly asks to hill-climb or to run an optimization loop toward a metric (latency, throughput, bundle size, memory, cost, accuracy, test pass rate, score). Not for a one-off "make this faster" fix.
 ---
 
@@ -36,7 +35,7 @@ objective
 
 Then:
 1. **Understand the ground.** Read the code under optimization, profile it if you can, and learn the existing tooling and patterns. Reuse existing building blocks (as in `/sc`).
-2. **Identify the regression surface.** Find tests and consumers that overlap the code you'll touch: unit and integration tests, downstream callers (use find-references or Lemma `check`), and related benchmarks.
+2. **Identify the regression surface.** Find tests and consumers that overlap the code you'll touch: unit and integration tests, downstream callers (use find-references or a code-intelligence tool if one is available), and related benchmarks.
 3. **Take a baseline.** Run the measure command several times and record the median and spread. Run the regression suite and record which tests already fail, so you don't blame yourself for them later.
 4. **Isolate the work.** Start from a clean working tree. If there are uncommitted changes, stop and ask, because a revert must never touch work that isn't yours. Use a dedicated local branch (`hill-climb/<slug>`), commit each accepted step there and **never push**. Outside git, keep a patch per accepted step.
 
@@ -79,7 +78,7 @@ Stop only when a stop condition is met **or** the backlog is genuinely exhausted
 
 ## Experiment ledger
 
-Keep a running ledger and show it at every accepted step and at the end. For long runs, also save it to a file in the scratchpad directory so it survives context compaction.
+Keep a running ledger and show it at every accepted step and at the end. For long runs, also save it to a file outside the repo (a temp or scratch directory) so it survives a long session.
 
 ```
 Best: 142 ms (baseline 210 ms, −32%)   Target: ≤ 120 ms   Iter 7/15

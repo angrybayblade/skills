@@ -21,7 +21,7 @@ Before proposing any fix, answer these on every non-trivial problem. (The user c
 
 1. **The real goal:** what outcome does the user actually need? The symptom isn't the goal.
 2. **Root cause:** ask "why?" until you reach a cause, not just the place where it shows up. Is the obvious fix only treating a symptom?
-3. **Blast radius:** what sits upstream (the cause, its inputs, config, infrastructure) and downstream (callers, consumers, data, users, other services or repos)? Use find-references, Lemma `check`, `git log` / `git blame`, logs and metrics. Don't guess.
+3. **Blast radius:** what sits upstream (the cause, its inputs, config, infrastructure) and downstream (callers, consumers, data, users, other services or repos)? Use find-references or other code-intelligence tools, `git log` / `git blame`, logs and metrics. Don't guess.
 4. **Same pattern elsewhere:** does this bug or design show up in other places? A local fix that leaves its siblings broken is incomplete.
 5. **The other side:** operations, security, cost, performance, maintenance, migration, the team, and the end user.
 

@@ -1,6 +1,5 @@
 ---
 name: zo
-argument-hint: "[topic]"
 description: Zoom out by moving the current problem or topic exactly one level of abstraction UP (for example code to module, module to component, component to system, system to ecosystem, ecosystem to purpose) and show what becomes visible from there, such as neighbours, upstream and downstream, constraints, and whether the problem even matters at that level. Use when the user invokes /zo, or asks to zoom out, step back, or see the bigger picture. Repeat /zo to keep climbing, and use /zi to come back down.
 ---
 
@@ -28,7 +27,7 @@ For problems that aren't about code, use: **Purpose › Context › Whole › Pa
 
 1. **Find the current level.** Use the level the conversation is working at (for example, a specific function means L1). If `/zo <topic>` names a topic, start from that topic's natural level. If it's unclear, pick the most likely level and say so.
 2. **Move up exactly one level.** Never skip levels. At L6, say you're at the top and offer a sideways view (a neighbouring goal or product) instead.
-3. **Ground it in evidence.** Read what exists at the new level, such as callers, configs, infrastructure, service maps, docs, tickets and `git log`. Use find-references or Lemma for call graphs. Mark each fact ✅ verified (with a source) or ❓ unknown.
+3. **Ground it in evidence.** Read what exists at the new level, such as callers, configs, infrastructure, service maps, docs, tickets and `git log`. Use find-references or other code-intelligence tools for call graphs. Mark each fact ✅ verified (with a source) or ❓ unknown.
 4. **Show the view** using the format below.
 
 ## Output

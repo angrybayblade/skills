@@ -13,6 +13,9 @@ Agent skills built for visual and low-noise collaboration. They follow the open 
 | [**zo**](skills/zo/SKILL.md): zoom out | `/zo [topic]` | Moves the problem one level of abstraction **up** (code → module → component → system → ecosystem → purpose) and shows what becomes visible from there. |
 | [**zi**](skills/zi/SKILL.md): zoom in | `/zi [thing]` | Moves the problem one level of abstraction **down** (purpose → … → code → runtime) and shows the internals and exactly where the problem lives, with evidence. |
 
+> [!CAUTION]
+> `bm` and `sr` tell the agent that **the user has ADHD** and can't take in long linear prose, which is why they demand such short, visual output. They were written for their author. If that isn't true for you, edit or delete that sentence in `skills/bm/SKILL.md` and `skills/sr/SKILL.md` after installing, or your agent will assume it about you.
+
 ## How they fit together
 
 ```

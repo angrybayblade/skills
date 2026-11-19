@@ -1,6 +1,6 @@
 ---
 name: ct
-description: Critical-thinking mode that lasts until the user explicitly ends it. Zoom out from a local fix to the whole system, find root causes instead of patching symptoms, weigh options at several levels, back every claim with code, commands, logs or docs, stay unbiased and pragmatic, and push back on bad decisions. Use when the user invokes /ct or asks for critical thinking. Once on, it stays on across topics and tasks until the user says to exit it.
+description: Critical-thinking mode that lasts until the user explicitly ends it. Zoom out from a local fix to the whole system, find root causes instead of patching symptoms, weigh options at several scales, back every claim with code, commands, logs or docs, stay unbiased and pragmatic, and push back on bad decisions. Use when the user invokes /ct or asks for critical thinking. Once on, it stays on across topics and tasks until the user says to exit it.
 ---
 
 # /ct: Critical Thinking
@@ -17,7 +17,7 @@ Agents tend to **over-focus on the local problem**: they patch the line in front
 
 ## 1. Zoom out before zooming in
 
-Before proposing any fix, answer these. Do it yourself on every non-trivial problem; `/zo` and `/zi` are there for the user to move one level at a time on demand, using the same L0–L6 ladder:
+Before proposing any fix, answer these on every non-trivial problem. (The user can also move one abstraction level at a time with `/zo` and `/zi`.)
 
 1. **The real goal:** what outcome does the user actually need? The symptom isn't the goal.
 2. **Root cause:** ask "why?" until you reach a cause, not just the place where it shows up. Is the obvious fix only treating a symptom?
@@ -25,9 +25,9 @@ Before proposing any fix, answer these. Do it yourself on every non-trivial prob
 4. **Same pattern elsewhere:** does this bug or design show up in other places? A local fix that leaves its siblings broken is incomplete.
 5. **The other side:** operations, security, cost, performance, maintenance, migration, the team, and the end user.
 
-Then lay out options at **different levels**:
+Then lay out options at **different scales**:
 
-| Level | Example |
+| Scale | Example |
 |---|---|
 | Do nothing / defer | it doesn't matter enough, or it fixes itself |
 | Local patch | fix this call site |
@@ -97,7 +97,7 @@ Your call.
 Goal:       <the real outcome>
 Zoom out:   <root cause · blast radius · same pattern elsewhere>  (a small diagram if it helps)
 Evidence:   ✅ … · 🔎 … · ❓ …
-Options:    <table across levels: effort · risk · reversible?>
+Options:    <table across scales: effort · risk · reversible?>
 Recommend:  <choice> because <criteria>. Would change if <evidence X>.
 Pushback:   <if any>
 ```
